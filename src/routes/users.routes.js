@@ -1,9 +1,10 @@
 const express = require("express")
 const router = express.Router()
-const controller = require("../controller/users.controller")
-const mongoose = require ("mongoose")
+const controller = require("../controller/cadastros.controller")
+
 
 //mongodb connection
+const mongoose = require ("mongoose")
 mongoose
 .connect("mongodb+srv://dbUsers:db1234@toti.0v6givl.mongodb.net/?retryWrites=true&w=majority")
 .then(()=> console.log("conectado a MongoAtlas"))
@@ -12,9 +13,9 @@ mongoose
 
 
 //Criamos as req em controller e aqui chamamos
-router.get("/")
+router.get("/",controller.resultadoCadastros)
 router.get("/uudi")
-router.post("/cadastrar")
+router.post("/cadastrar",controller.criarCadastros)
 router.put("/atualizar")
 
 module.exports= router

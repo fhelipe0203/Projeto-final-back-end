@@ -1,9 +1,12 @@
 const express = require("express");
-const app = express();
+const { db } = require("./models/cadastros");
+const cadastro = require("./routes/users.routes")
 
+
+
+const app = express();
 app.use(express.json());
 
-const users = require("./routes/users.routes")
-
+app.use("/cadastro", cadastro)
 
 module.exports = app
