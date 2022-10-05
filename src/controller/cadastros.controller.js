@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const cadastros = require("../models/cadastros")
-const Cadastro = require("../models/cadastros")
+
 
 const resultadoCadastros= async(req,res)=>{
     try{
