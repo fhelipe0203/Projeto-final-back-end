@@ -1,6 +1,6 @@
 const express = require("express");
-const { db } = require("./models/cadastros");
 const cadastro = require("./routes/users.routes")
+const db = require('./data/mongo')
 
 
 
