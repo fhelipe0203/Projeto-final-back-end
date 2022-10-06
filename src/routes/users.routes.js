@@ -3,7 +3,7 @@ const router = express.Router()
 const controller = require("../controller/cadastros.controller")
 
 
-//mongodb connection
+
 
 
 
@@ -11,6 +11,6 @@ const controller = require("../controller/cadastros.controller")
 router.get("/",controller.resultadoCadastros)
 router.get("/uudi")
 router.post("/",controller.criarCadastros)
-router.put("/atualizar")
+router.patch("/:uid",controller.putCadastro)
 
 module.exports= router
