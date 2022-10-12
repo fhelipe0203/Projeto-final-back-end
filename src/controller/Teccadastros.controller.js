@@ -2,29 +2,30 @@ const mongoose = require("mongoose")
 const Cadastro = require("../models/tecnicos")
 
 
-const resultadoCadastros= async(req,res)=>{
-    try{
-        const cadastros = await Cadastro.find()
-        return res.status(200).json(cadastros)
+
+const resultadoCadastro= async (req, res) => {
+    try {
+        const Cadastro = await Cadastro.find()
+        return res.status(200).json(Cadastro)
     }catch (err){
-        res.status(500).json({message: err.message})
+        res.status(500).json({ message: err.message })
     }
 };
 
-const IdCadastros= async(req,res)=>{
-    try{
-        const cadastros = await Cadastro.findById(req.params.id)
-        return res.status(200).json(cadastros)
-    }catch (err){
-        res.status(500).json({message: err.message})
+const IdCadastro= async(req, res)=>{
+    try {
+        const Cadastro = await Cadastro.findById(req.params.id)
+        return res.status(200).json(Cadastro)
+    }catch (err) {
+        res.status(500).json({ message: err.message })
     }
 };
 
 
-const criarCadastros = async (req,res)=>{
+const criarCadastro = async (req,res) => {
     console.log(req.body)
 
-    const cadastro = new Cadastro({
+    const Cadastro = new Cadastro({
         _id: new mongoose.Types.ObjectId(),
         nome: req.body.nome,
         email: req.body.email,
@@ -38,7 +39,7 @@ const criarCadastros = async (req,res)=>{
         return res.status(409).json({error:"Tecnico já cadastrado"})
     }
     try{
-        const novoCadastro = await cadastro.save()
+        const novoCadastro = await Cadastro.save()
         res.status(201).json(novoCadastro)
     }
     catch(err){
@@ -46,7 +47,7 @@ const criarCadastros = async (req,res)=>{
     }
 }
 
-const putCadastro = async (req,res) => {
+const putCadastro = async (req, res) => {
     const encontrarCadastro = await Cadastro.findById(req.params.id)
     if(encontrarCadastro == null){
         return res.status(400).json({message: "Cadastro não encontrado"})
@@ -61,13 +62,25 @@ const putCadastro = async (req,res) => {
     
 }
 
-
+const deleteCadastro = async (req, res) => {
+    try {
+        const Cadastro = await Cadastro.findById(req.params.id)
+        if (Cadastro == null) {
+            return res.status(400).json({ message:"cadastro não encontrado" })
+        }
+        await Cadastro.remove()
+        res.json({message: "cadastro deletado"})
+    }
+    catch (err) {
+        return res.status(500).json({ message: err.message })
+}
+}
 
        
 module.exports= {
-    resultadoCadastros,
-    criarCadastros,
+    resultadoCadastro,
+    criarCadastro,
     putCadastro,
-    IdCadastros,
-   
+    IdCadastro,
+    deleteCadastro
 }
