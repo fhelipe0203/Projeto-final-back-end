@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const Cadastro = require("../models/cadastros")
+const Cadastro = require("../models/tecnicos")
 
 
 const resultadoCadastros= async(req,res)=>{
@@ -11,6 +11,14 @@ const resultadoCadastros= async(req,res)=>{
     }
 };
 
+const IdCadastros= async(req,res)=>{
+    try{
+        const cadastros = await Cadastro.findById(req.params.id)
+        return res.status(200).json(cadastros)
+    }catch (err){
+        res.status(500).json({message: err.message})
+    }
+};
 
 
 const criarCadastros = async (req,res)=>{
@@ -54,9 +62,12 @@ const putCadastro = async (req,res) => {
 }
 
 
+
        
 module.exports= {
     resultadoCadastros,
     criarCadastros,
     putCadastro,
+    IdCadastros,
+   
 }
