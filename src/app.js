@@ -1,5 +1,5 @@
 const express = require("express");
-const cadastro = require("./routes/users.routes")
+const cadastro = require("./routes/tecnicos.routes")
 const db = require("./data/mongo")
 const cors = require('cors');
 
