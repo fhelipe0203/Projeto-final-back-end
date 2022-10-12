@@ -22,7 +22,7 @@ const IdCadastro= async(req, res)=>{
 };
 
 
-const criarCadastro = async (req,res) => {
+const criarCadastro = async (req, res) => {
     console.log(req.body)
 
     const Cadastro = new Cadastro({
@@ -34,16 +34,16 @@ const criarCadastro = async (req,res) => {
         estado: req.body.estado,
         datadecreation: req.body.datadecreation,
     })
-    const cadastroJaExistir = await Cadastro.findOne({nome: req.body.nome})
-    if(cadastroJaExistir){
-        return res.status(409).json({error:"Tecnico já cadastrado"})
+    const cadastroJaExistir = await Cadastro.findOne({ nome: req.body.nome })
+    if (cadastroJaExistir) {
+        return res.status(409).json({ error: "Tecnico já cadastrado" })
     }
-    try{
+    try {
         const novoCadastro = await Cadastro.save()
         res.status(201).json(novoCadastro)
     }
-    catch(err){
-        res.status(500).json({message:err.message})
+    catch (err) {
+        res.status(500).json({ message: err.message })
     }
 }
 
