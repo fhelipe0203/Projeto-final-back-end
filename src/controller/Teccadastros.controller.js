@@ -14,8 +14,8 @@ const resultadoCadastro= async (req, res) => {
 
 const IdCadastro= async(req, res)=>{
     try {
-        const Cadastro = await Cadastro.findById(req.params.id)
-        return res.status(200).json(Cadastro)
+        const cadastro = await Cadastro.findById(req.params.id)
+        return res.status(200).json(cadastro)
     }catch (err) {
         res.status(500).json({ message: err.message })
     }
@@ -25,7 +25,7 @@ const IdCadastro= async(req, res)=>{
 const criarCadastro = async (req, res) => {
     console.log(req.body)
 
-    const Cadastro = new Cadastro({
+    const cadastro = new Cadastro({
         _id: new mongoose.Types.ObjectId(),
         nome: req.body.nome,
         email: req.body.email,
@@ -39,7 +39,7 @@ const criarCadastro = async (req, res) => {
         return res.status(409).json({ error: "Tecnico já cadastrado" })
     }
     try {
-        const novoCadastro = await Cadastro.save()
+        const novoCadastro = await cadastro.save()
         res.status(201).json(novoCadastro)
     }
     catch (err) {
@@ -64,11 +64,11 @@ const putCadastro = async (req, res) => {
 
 const deleteCadastro = async (req, res) => {
     try {
-        const Cadastro = await Cadastro.findById(req.params.id)
-        if (Cadastro == null) {
+        const cadastros = await Cadastro.findById(req.params.id)
+        if (cadastros == null) {
             return res.status(400).json({ message:"cadastro não encontrado" })
         }
-        await Cadastro.remove()
+        await cadastros.remove()
         res.json({message: "cadastro deletado"})
     }
     catch (err) {

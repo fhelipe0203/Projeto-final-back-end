@@ -1,7 +1,9 @@
 const express = require("express");
 const cadastro = require("./routes/tecnicos.routes")
+const cadastroUser = require("./routes/usuarios.routes")
 const db = require("./data/mongo")
 const cors = require('cors');
+
 
 
 
@@ -11,6 +13,7 @@ app.use(express.json());
 app.use(cors({origin: '*'}))
 //usando os url aqui
 app.use("/cadastro", cadastro)
+app.use("/cadastroUser", cadastroUser)
 
 
 

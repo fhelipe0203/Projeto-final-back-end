@@ -1,10 +1,10 @@
 const mongoose = require("mongoose")
-const cadastroUser = require("../models/usuarios")
+const cadastroUser = require("../models/usuario")
 
 const resultadoCadastroUser = async (req, res) => {
     try {
-        const cadastroUser = await cadastroUser.find()
-        return res.status(200).json(cadastroUser)
+        const cadastrouser = await cadastroUser.find()
+        return res.status(200).json(cadastrouser)
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
@@ -12,8 +12,8 @@ const resultadoCadastroUser = async (req, res) => {
 
 const idCadastroUser = async (req, res) => {
     try {
-        const cadastroUser = await cadastroUser.findById(req.params.id)
-        return res.status(200).json(cadastroUser)
+        const cadastrouser = await cadastroUser.findById(req.params.id)
+        return res.status(200).json(cadastrouser)
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
@@ -21,18 +21,19 @@ const idCadastroUser = async (req, res) => {
 
 const criarCadastroUser = async (req, res) => {
     console.log(req.body) 
-    const cadatroUser = new cadastroUser({
+
+    const CadastroUser = new cadastroUser({
         _id: new mongoose.Types.ObjectId(),
         nome: req.body.nome, 
         email: req.body.email,
-        contato: req.body.contato
+        contato: req.body.contato,
     })
     const cadastroUserJaExistir = await cadastroUser.findOne({ nome: req.body.nome })
     if (cadastroUserJaExistir) {
         return res.status(409).json({error:"Usuario já cadastrado"})
     }
     try {
-        const novoCadastroUser = await cadastroUser.save()
+        const novoCadastroUser = await CadastroUser.save()
         res.status(201).json(novoCadastroUser)
     }
     catch (err) {
@@ -47,7 +48,7 @@ const putCadastroUser = async (req, res) => {
     }
     try {
         const cadastroUserAtualizado = await encontrarCadastroUser.save()
-        res.status(200).json(cadastroUseratualizado)
+        res.status(200).json(cadastroUserAtualizado)
     }
     catch (err) {
         res.status(500).json({ message: err.message })
@@ -68,7 +69,7 @@ const deleteCadastroUser = async (req, res) => {
     }
 }
 
-module.exports = {
+module.exports= {
     resultadoCadastroUser,
     idCadastroUser,
     criarCadastroUser,
