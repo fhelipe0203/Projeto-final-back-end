@@ -1,6 +1,8 @@
 const mongoose = require("mongoose")
 
 const cadastroUserShema = new mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+
     nome: {
         type: String,
         require: true
