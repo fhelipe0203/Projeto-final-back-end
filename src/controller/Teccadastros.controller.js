@@ -64,11 +64,11 @@ const putCadastro = async (req, res) => {
 
 const deleteCadastro = async (req, res) => {
     try {
-        const Cadastro = await Cadastro.findById(req.params.id)
-        if (Cadastro == null) {
+        const cadastros = await Cadastro.findById(req.params.id)
+        if (cadastros == null) {
             return res.status(400).json({ message:"cadastro não encontrado" })
         }
-        await Cadastro.remove()
+        await cadastros.remove()
         res.json({message: "cadastro deletado"})
     }
     catch (err) {
