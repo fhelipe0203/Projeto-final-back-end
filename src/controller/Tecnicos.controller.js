@@ -66,12 +66,11 @@ const deleteCadastro = async (req, res) => {
     try {
         const cadastros = await Cadastro.findById(req.params.id)
         if (cadastros == null) {
-            return res.status(400).json({ message:"cadastro não encontrado" })
+            return res.status(404).json({ message:"cadastro não encontrado" })
         }
         await cadastros.remove()
         res.json({message: "cadastro deletado"})
-    }
-    catch (err) {
+    }catch (err) {
         return res.status(500).json({ message: err.message })
 }
 }
