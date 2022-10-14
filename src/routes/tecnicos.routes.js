@@ -11,7 +11,7 @@ const controller = require("../controller/Tecnicos.controller")
 router.get("/",controller.resultadoCadastro)
 router.get("/:id",controller.IdCadastro)
 router.post("/",controller.criarCadastro)
-router.patch("/:id",controller.putCadastro)
+router.patch("/:id",controller.patchCadastro)
 router.delete("/:id",controller.deleteCadastro)
 
 module.exports = router

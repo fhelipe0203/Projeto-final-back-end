@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const cadastroUser = require("../models/usuario")
-
+//trocar de nome
 const resultadoCadastroUser = async (req, res) => {
     try {
         const cadastrouser = await cadastroUser.find()
@@ -9,7 +9,7 @@ const resultadoCadastroUser = async (req, res) => {
         res.status(500).json({ message: err.message })
     }
 };
-
+//trocar
 const idCadastroUser = async (req, res) => {
     try {
         const cadastrouser = await cadastroUser.findById(req.params.id)
@@ -28,7 +28,7 @@ const criarCadastroUser = async (req, res) => {
         email: req.body.email,
         contato: req.body.contato,
     })
-    const cadastroUserJaExistir = await cadastroUser.findOne({ nome: req.body.nome })
+    const cadastroUserJaExistir = await cadastroUser.findOne({ nome: req.body.nome })//trocar por email
     if (cadastroUserJaExistir) {
         return res.status(409).json({error:"Usuario já cadastrado"})
     }
@@ -47,7 +47,7 @@ const putCadastroUser = async (req, res) => {
         return res.status(400).json({ message: "cadastro de usuario não encontrado "})
     }
     try {
-        const cadastroUserAtualizado = await encontrarCadastroUser.save()
+        const cadastroUserAtualizado = await encontrarCadastroUser.save()//verificar o metodo fazer combinação de update e set
         res.status(200).json(cadastroUserAtualizado)
     }
     catch (err) {
@@ -57,11 +57,11 @@ const putCadastroUser = async (req, res) => {
 
 const deleteCadastroUser = async (req, res) => {
     try {
-        const cadastroUser = await cadastroUser.findById(req.params.id)
-        if (cadastroUser == null) {
+        const CadastroUser = await cadastroUser.findById(req.params.id)
+        if (CadastroUser == null) {
             return res.status(400).json({ message: "Cadastro de usuario não encontrado" })
         }
-        await cadastroUser.remove()
+        await CadastroUser.remove()
         res.json({ message: "Cadastro de Usuario deletado" })
     }
     catch (err) {
