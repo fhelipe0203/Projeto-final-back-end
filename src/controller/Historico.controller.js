@@ -3,7 +3,7 @@ const Historico = require("../models/historico")
 
 const resultadoHistorico= async (req, res) => {
     try {
-        const gethistorico = await Historico.find().populate("tecnico")
+        const gethistorico = await Historico.find().populate("tecnico").populate("usuario")
         return res.status(200).json(gethistorico)
     }catch (err){
         res.status(500).json({ message: err.message })
