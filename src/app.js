@@ -5,6 +5,9 @@ const historicos = require("./routes/historico.routes")
 const db = require("./data/mongo")
 const cors = require('cors');
 
+// Swagger
+const swaggerUi = require('swagger-ui-express')
+const swaggerDocument = require('./docs/doc.json')
 
 
 const app = express();
@@ -15,6 +18,8 @@ app.use(cors({origin: '*'}))
 app.use("/tecnicos",tecnico)
 app.use("/User", cadastroUser)
 app.use("/historico", historicos)
+//Definindo rota para a documentação
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 

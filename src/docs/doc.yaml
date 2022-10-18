@@ -1,0 +1,247 @@
+openapi: 3.0.3
+info:
+  title: API Infotech
+  description: Essa Api será responsável pelo gerenciamento das informações do banco de dados da empresa InfoTech.. 
+  contact:
+    name: Repositorio GitHub
+    url: https://github.com/fhelipe0203/pruebadeapi
+  version: 1.0.0
+servers:
+  - url: http://localhost:4000
+tags:
+  - name: Users
+    description: Gestão dos usuários.
+  - name: Técnicos
+    description: Gestão dos técnicos
+paths:
+  /user:
+    post:
+      tags:
+        - Users
+      summary: Cria um usuário dentro do banco de dados
+      description: Endpoint responsável pela criação dos usuários dentro do banco de dados.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BodyUserPost'
+            example:
+              name: 'Peter Parker'
+              email: 'parker@mail.com'
+              contato: '335556734'
+        required: true
+      responses:
+        '200':
+          description: 'Usuario criado com sucesso'
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/BodyUser'
+              example:
+                id: '634e1312cbccea2e8a404d5c'
+                name: 'Peter Parker'
+                email: 'parker@mail.com'
+                contato: '335556734'
+        '500':
+          description: Erro
+    get:
+      tags:
+        - Users
+      summary: Lista de todos os usuários no banco de dados
+      description: EndPoint responsável por mostrar todos os usuários existentes no banco de dados.
+      responses:
+        '200':
+          description: Retorna todos os alunos no banco de dados
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/BodyUser'
+              example:
+                id: '634e13asrb4218a404d5c'
+                name: 'Silomon Tolomeo'
+                email: 'tolomeo@mail.com'
+                contato: '3377336734'
+        '500':
+          description: Erro
+  /user/{idUser}:
+    get:
+      tags:
+        - Users
+      summary: Obter informações sobre um usuário em especifico
+      description: Endpoint resposável por mostrar os detalhes sobre um usuário especifico pelo seu _id_.
+      parameters:
+        - name: idUser
+          in: path
+          description: Identificador único do usuario.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Retorna os detalhes sobre um usuario selecionado pelo seu _id_.
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/BodyUser'
+              examples:
+                User:
+                  value:
+                    id: '634e131218a404d5c'
+                    name: 'Tony Stark'
+                    email: 'stark@mail.com'
+                    contato: '3377336734'
+        '500':
+          description: Erro
+    patch:
+      tags:
+        - Users
+      summary: Atualizar informações de um usuário no banco de dados
+      description: Endpoint responsável por atualizar informações sobre um usuário selecionado pelo seu _id_ dentro do banco de dados
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BodyUserPost'
+            examples:
+                User:
+                  value:
+                    name: 'Steven Grant Rogers'
+                    email: 'rogers@mail.com'
+                    contato: '3377336712'  
+        required: true
+      parameters:
+        - name: idUser
+          in: path
+          description: Identificador único do usuário.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Usuário atualizado com sucesso
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/BodyUser'
+              examples:
+                User:
+                  value:
+                    id: '634e13asrb4218a404d5c'
+                    name: 'Steven Grant Rogers'
+                    email: 'rogers@mail.com'
+                    contato: '3377336712'
+        '400':
+          description: 'Cadastro de usuario não encontrado'
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+              examples:
+                Message:
+                  value:
+                    message: 'cadastro de usuario não encontrado'
+        '500':
+          description: Erro
+    delete:
+      tags:
+        - Users
+      summary: Remover informações de um usuario no banco de dados
+      description: Endpoint responsável por remover usuários selecionados pelo seu _id_ dentro do banco de dados.
+      parameters:
+        - name: idUser
+          in: path
+          description: Identificador único do usuario.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Usuário removido com sucesso
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+              example:
+                message: 'Cadastro de Usuario deletado'
+        '400':
+          description: Usuario não encontrado
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+              example:
+                message: 'Cadastro de Usuario não encontrado'
+        '500':
+          description: Erro
+  /tecnicos:
+    post:
+      tags:
+        - Técnicos
+      summary: Cria um técnico dentro do banco de dados
+      description: Endpoint responsável pela criação dos técnicos dentro do banco de dados.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BodyTecnicosPost'
+            examples:
+              Turma:
+                value:
+                  name: 'Spiderman'
+                  email: 'spiderman@mail.com'
+                  contato: '111335556'
+        required: true
+      responses:
+        '200':
+          description: Técnico criado com sucesso
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+components:
+  schemas:
+    BodyUserPost:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nome completo do usuário
+        email:
+          type: string
+          description: Email do usuário
+        contato:
+          type: string
+          description: Número de contato do aluno
+    BodyUser:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único do usuário
+        name:
+          type: string
+          description: Nome completo do usuário
+        email:
+          type: string
+          description: Email do usuário
+        contato:
+          type: string
+          description: Número de contato do aluno
+    Message:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Body message
+    BodyTecnicosPost:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nome completo do usuário
+        email:
+          type: string
+          description: Email do usuário
+        contato:
+          type: string
+          description: Número de contato do aluno
