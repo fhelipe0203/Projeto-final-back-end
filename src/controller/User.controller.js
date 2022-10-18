@@ -45,11 +45,24 @@ const putCadastroUser = async (req, res) => {
     const encontrarCadastroUser = await cadastroUser.findById(req.params.id)
     if (encontrarCadastroUser == null) {
         return res.status(400).json({ message: "cadastro de usuario não encontrado "})
-    }
+    };
+    if (req.body.nome != null) {
+        encontrarCadastroUser.nome = req.body.nome
+       };
+       if (req.body.email != null) {
+        encontrarCadastroUser.email = req.body.email  
+      };
+     if (req.body.contato != null) {
+         encontrarCadastroUser.contato = req.body.contato 
+      };
+
+
+
     try {
         const cadastroUserAtualizado = await encontrarCadastroUser.save()//verificar o metodo fazer combinação de update e set
         res.status(200).json(cadastroUserAtualizado)
     }
+    
     catch (err) {
         res.status(500).json({ message: err.message })
     }
