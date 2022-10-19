@@ -51,25 +51,25 @@ const putUser = async (req, res) => {
     };
     if (req.body.nome != null) {
         encontrarCadastroUser.nome = req.body.nome
-       };
-       if (req.body.email != null) {
-        encontrarCadastroUser.email = req.body.email  
-      };
+    };
+    if (req.body.email != null) {
+        encontrarCadastroUser.email = req.body.email
+    };
     if (req.body.contato != null) {
-         encontrarCadastroUser.contato = req.body.contato 
-      };
+        encontrarCadastroUser.contato = req.body.contato
+    };
 
-        try {
+    try {
         const cadastroUserAtualizado = await encontrarCadastroUser.save()
         res.status(200).json(cadastroUserAtualizado)
     }
-    
-        catch (err) {
+
+    catch (err) {
         res.status(500).json({ message: err.message })
     }
 };
 
-const deleteCadastroUser = async (req, res) => {
+const deleteUser = async (req, res) => {
     try {
         const CadastroUser = await cadastroUser.findById(req.params.id)
         if (CadastroUser == null) {
@@ -83,7 +83,7 @@ const deleteCadastroUser = async (req, res) => {
     }
 };
 
-module.exports= {
+module.exports = {
     resultadoUser,
     idUser,
     criarCadastroUser,
