@@ -4,7 +4,7 @@ info:
   description: Essa Api será responsável pelo gerenciamento das informações do banco de dados da empresa InfoTech.. 
   contact:
     name: Repositorio GitHub
-    url: https://github.com/fhelipe0203/pruebadeapi
+    url: https://github.com/fhelipe0203/Projeto-final-back-end
   version: 1.0.0
 servers:
   - url: http://localhost:4000
@@ -13,6 +13,8 @@ tags:
     description: Gestão dos usuários.
   - name: Técnicos
     description: Gestão dos técnicos
+  - name: Histórico
+    description: Gestão do histórico
 paths:
   /user:
     post:
@@ -29,10 +31,11 @@ paths:
               name: 'Peter Parker'
               email: 'parker@mail.com'
               contato: '335556734'
+              interesse: 'Full Stack'
         required: true
       responses:
         '200':
-          description: 'Usuario criado com sucesso'
+          description: 'Usuário criado com sucesso'
           content:
             aplication/json:
               schema:
@@ -42,6 +45,15 @@ paths:
                 name: 'Peter Parker'
                 email: 'parker@mail.com'
                 contato: '335556734'
+                interesse: 'Full Stack'
+        '409':
+          description: Usuário já cadastrado
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+              example:
+                message: 'Usuário já cadastrado'
         '500':
           description: Erro
     get:
@@ -61,6 +73,7 @@ paths:
                 name: 'Silomon Tolomeo'
                 email: 'tolomeo@mail.com'
                 contato: '3377336734'
+                interesse: 'Full Stack'
         '500':
           description: Erro
   /user/{idUser}:
@@ -83,13 +96,12 @@ paths:
             aplication/json:
               schema:
                 $ref: '#/components/schemas/BodyUser'
-              examples:
-                User:
-                  value:
+              example:
                     id: '634e131218a404d5c'
                     name: 'Tony Stark'
                     email: 'stark@mail.com'
                     contato: '3377336734'
+                    interesse: 'Full Stack'
         '500':
           description: Erro
     patch:
@@ -102,12 +114,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/BodyUserPost'
-            examples:
-                User:
-                  value:
+            example:
                     name: 'Steven Grant Rogers'
                     email: 'rogers@mail.com'
-                    contato: '3377336712'  
+                    contato: '3377336712'
+                    interesse: 'Front End'
         required: true
       parameters:
         - name: idUser
@@ -123,22 +134,19 @@ paths:
             aplication/json:
               schema:
                 $ref: '#/components/schemas/BodyUser'
-              examples:
-                User:
-                  value:
+              example:
                     id: '634e13asrb4218a404d5c'
-                    name: 'Steven Grant Rogers'
+                    name: 'Steven Rogers'
                     email: 'rogers@mail.com'
                     contato: '3377336712'
+                    interesse: 'Front End'
         '400':
           description: 'Cadastro de usuario não encontrado'
           content:
             aplication/json:
               schema:
                 $ref: '#/components/schemas/Message'
-              examples:
-                Message:
-                  value:
+              example:
                     message: 'cadastro de usuario não encontrado'
         '500':
           description: Erro
@@ -183,21 +191,257 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BodyTecnicosPost'
-            examples:
-              Turma:
-                value:
-                  name: 'Spiderman'
-                  email: 'spiderman@mail.com'
+              $ref: '#/components/schemas/BodyTecnicoPost'
+            example:
+                  name: 'Tony Stark'
+                  email: 'stark@mail.com'
                   contato: '111335556'
+                  especialidade: 'Full Stack'
+                  estado: 'California'
         required: true
       responses:
-        '200':
+        '201':
           description: Técnico criado com sucesso
           content:
             aplication/json:
               schema:
                 $ref: '#/components/schemas/Message'
+              example:
+                id: '634f70f5562c5ba3afdf8290'
+                name: 'Tony Stark'
+                email: 'stark@mail.com'
+                contato: '111335556'
+                especialidade: 'Full Stack'
+                estado: 'California'
+                datadecreation: '2022-10-19T03:37:20.630Z'
+        '409':
+          description: Técnico já cadastrado
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+              example:
+                message: 'Técnico já cadastrado'
+        '500':
+          description: Erro
+    get:
+      tags:
+        - Técnicos
+      summary: Lista de todos os técnicos no banco de dados
+      description: EndPoint responsável por mostrar todos os técnicos existentes no banco de dados.
+      responses:
+        '200':
+          description: Retorna todos os alunos no banco de dados
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/BodyTecnico'
+              example:
+                id: '634e13asrb4218a404d5c'
+                name: 'Tony Stark'
+                email: 'stark@mail.com'
+                contato: '3377336734'
+                especialidade: 'Full Stack'
+                estado: 'California'
+                datadecreation: '2022-10-19T03:37:20.630Z'
+        '500':
+          description: Erro
+  /tecnicos/{idTecnico}:
+    get:
+      tags:
+        - Técnicos
+      summary: Obter informações sobre um técnico em especifico
+      description: Endpoint resposável por mostrar os detalhes sobre um técnico especifico pelo seu _id_.
+      parameters:
+        - name: idTecnico
+          in: path
+          description: Identificador único do técnico.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Retorna os detalhes sobre um técnico selecionado pelo seu _id_.
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/BodyTecnico'
+              examples:
+                User:
+                  value:
+                    id: '634e131218a404d5c'
+                    name: 'Tony Stark'
+                    email: 'stark@mail.com'
+                    contato: '3377336734'
+                    especialidade: 'Full Stack'
+                    estado: 'California'
+                    datadecreation: '2022-10-19T03:37:20.630Z'
+        '500':
+          description: Erro
+    patch:
+      tags:
+        - Técnicos
+      summary: Atualizar informações de um técnico no banco de dados
+      description: Endpoint responsável por atualizar informações sobre um técnico selecionado pelo seu _id_ dentro do banco de dados
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BodyTecnicoPost'
+            example:
+              name: 'Tony Stark'
+              email: 'stark@mail.com'
+              contato: '3377336734'
+              especialidade: 'Full Stack'
+              estado: 'California' 
+        required: true
+      parameters:
+        - name: idTecnico
+          in: path
+          description: Identificador único do técnico.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Técnico atualizado com sucesso
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/BodyTecnico'
+              example:
+                id: '634e13asrb4218a404d5c'
+                name: 'Tony Stark'
+                email: 'stark@mail.com'
+                contato: '3377336734'
+                especialidade: 'Full Stack'
+                estado: 'California'
+        '400':
+          description: 'Cadastro do técnico não encontrado'
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+              examples:
+                Message:
+                  value:
+                    message: 'cadastro do técnico não encontrado'
+        '500':
+          description: Erro
+    delete:
+      tags:
+        - Técnicos
+      summary: Remover informações de um técnico no banco de dados
+      description: Endpoint responsável por remover técnicos selecionados pelo seu _id_ dentro do banco de dados.
+      parameters:
+        - name: idTecnico
+          in: path
+          description: Identificador único do técnico.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Técnico removido com sucesso
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+              example:
+                message: 'Cadastro deletado'
+        '404':
+          description: Técnico não encontrado
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+              example:
+                message: 'Cadastro não encontrado'
+        '500':
+          description: Erro
+  /historico:
+    post:
+      tags:
+        - Histórico
+      summary: Cria um registro do histórico dentro do banco de dados
+      description: Endpoint responsável pela criação dos registros do histórico dentro do banco de dados.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BodyHistoricoPost'
+            example:
+              tecnico: 'Tony Stark'
+              usuario: 'Peter Parker'
+        required: true
+      responses:
+        '201':
+          description: 'Histórico criado com sucesso'
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/BodyHistorico'
+              example:
+                id: '634e1312cbccea2e8a404d5c'
+                tecnico: 'Tony Stark'
+                usuario: 'Peter Parker'
+                datadecreation: '2022-10-14T03:50:42.642Z'
+        '409':
+          description: Histórico já criado
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+              example:
+                message: 'Histórico já criado'
+        '500':
+          description: Erro
+    get:
+      tags:
+        - Histórico
+      summary: Lista de todos os registros do histórico no banco de dados
+      description: EndPoint responsável por mostrar todos os registros dos histórico existentes no banco de dados.
+      responses:
+        '200':
+          description: Retorna todos os registros do histórico no banco de dados
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/BodyHistorico'
+              example:
+                id: '634e1312cbccea2e8a404d5c'
+                tecnico: 'Tony Stark'
+                usuario: 'Peter Parker'
+                datadecreation: '2022-10-14T03:50:42.642Z'
+        '500':
+          description: Erro
+  /historico/{idHistorico}:
+    get:
+      tags:
+        - Histórico
+      summary: Obter informações sobre um registro do histórico em específico
+      description: Endpoint resposável por mostrar os detalhes sobre um registro do histórico específico pelo seu _id_.
+      parameters:
+        - name: idHistorico
+          in: path
+          description: Identificador único do registro do histórico.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Retorna os detalhes sobre um usuario selecionado pelo seu _id_.
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/BodyUser'
+              example:
+                id: '634e1312cbccea2e8a404d5c'
+                tecnico: 'Tony Stark'
+                usuario: 'Peter Parker'
+                datadecreation: '2022-10-14T03:50:42.642Z'
+        '500':
+          description: Erro
 components:
   schemas:
     BodyUserPost:
@@ -212,6 +456,9 @@ components:
         contato:
           type: string
           description: Número de contato do aluno
+        interesse:
+          type: string
+          description: serviço de interesse do usuário
     BodyUser:
       type: object
       properties:
@@ -227,21 +474,78 @@ components:
         contato:
           type: string
           description: Número de contato do aluno
+        interesse:
+          type: string
+          description: serviço de interesse do usuário
     Message:
       type: object
       properties:
         message:
           type: string
           description: Body message
-    BodyTecnicosPost:
+    BodyTecnicoPost:
       type: object
       properties:
         name:
           type: string
-          description: Nome completo do usuário
+          description: Nome completo do técnico
         email:
           type: string
-          description: Email do usuário
+          description: Email do técnico
         contato:
           type: string
-          description: Número de contato do aluno
+          description: Número de contato do técnico
+        especialidade:
+          type: string
+          description: Especialidade do técnico
+        estado:
+          type: string
+          description: Estado onde se encontra o técnico
+    BodyTecnico:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único do técnico
+        name:
+          type: string
+          description: Nome completo do técnico
+        email:
+          type: string
+          description: Email do técnico
+        contato:
+          type: string
+          description: Número de contato do técnic
+        especialidade:
+          type: string
+          description: Especialidade do técnico
+        estado:
+          type: string
+          description: Estado onde se encontra o técnico
+        dataDeCreation:
+          type: string
+          description: Data onde foi criado o técnico no sistema
+    BodyHistoricoPost:
+      type: object
+      properties:
+        tecnico:
+          type: string
+          description: Nome completo do técnico
+        usuario:
+          type: string
+          description: Nome completo do usuário
+    BodyHistorico:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único do registro do histórico
+        tecnico:
+          type: string
+          description: Nome completo do técnico
+        usuario:
+          type: string
+          description: Nome completo do usuário
+        datadecreation:
+          type: string
+          description: Data onde foi criado o registro do histórico dentro do banco de dados
