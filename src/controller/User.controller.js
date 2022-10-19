@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const cadastroUser = require("../models/usuario")
-//trocar de nome
-const resultadoCadastroUser = async (req, res) => {
+
+const resultadoUser = async (req, res) => {
     try {
         const cadastrouser = await cadastroUser.find()
         return res.status(200).json(cadastrouser)
@@ -9,8 +9,9 @@ const resultadoCadastroUser = async (req, res) => {
         res.status(500).json({ message: err.message })
     }
 };
-//trocar
-const idCadastroUser = async (req, res) => {
+
+
+const idUser = async (req, res) => {
     try {
         const cadastrouser = await cadastroUser.findById(req.params.id)
         return res.status(200).json(cadastrouser)
@@ -28,7 +29,7 @@ const criarCadastroUser = async (req, res) => {
         email: req.body.email,
         contato: req.body.contato,
     })
-    const cadastroUserJaExistir = await cadastroUser.findOne({ nome: req.body.nome })//trocar por email
+    const cadastroUserJaExistir = await cadastroUser.findOne({ email: req.body.email })
     if (cadastroUserJaExistir) {
         return res.status(409).json({error:"Usuario já cadastrado"})
     }
@@ -39,9 +40,10 @@ const criarCadastroUser = async (req, res) => {
     catch (err) {
         res.status(500).json({ message: err.message })
     }
-}
+};
 
-const putCadastroUser = async (req, res) => {
+
+const putUser = async (req, res) => {
     const encontrarCadastroUser = await cadastroUser.findById(req.params.id)
     if (encontrarCadastroUser == null) {
         return res.status(400).json({ message: "cadastro de usuario não encontrado "})
@@ -52,23 +54,22 @@ const putCadastroUser = async (req, res) => {
        if (req.body.email != null) {
         encontrarCadastroUser.email = req.body.email  
       };
-     if (req.body.contato != null) {
+    if (req.body.contato != null) {
          encontrarCadastroUser.contato = req.body.contato 
       };
 
-
-
-    try {
-        const cadastroUserAtualizado = await encontrarCadastroUser.save()//verificar o metodo fazer combinação de update e set
+        try {
+        const cadastroUserAtualizado = await encontrarCadastroUser.save()
         res.status(200).json(cadastroUserAtualizado)
     }
     
-    catch (err) {
+        catch (err) {
         res.status(500).json({ message: err.message })
     }
-}
+};
 
-const deleteCadastroUser = async (req, res) => {
+
+const deleteUser = async (req, res) => {
     try {
         const CadastroUser = await cadastroUser.findById(req.params.id)
         if (CadastroUser == null) {
@@ -80,12 +81,12 @@ const deleteCadastroUser = async (req, res) => {
     catch (err) {
         return res.status(500).json({ message: err.message })
     }
-}
+};
 
 module.exports= {
-    resultadoCadastroUser,
-    idCadastroUser,
+    resultadoUser,
+    idUser,
     criarCadastroUser,
-    putCadastroUser,
-    deleteCadastroUser
+    putUser,
+    deleteUser
 }
