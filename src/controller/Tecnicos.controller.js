@@ -88,7 +88,7 @@ const deleteCadastro = async (req, res) => {
             return res.status(404).json({ message:"cadastro não encontrado" })
         }
         await cadastros.remove()
-        res.json({message: "cadastro deletado"})
+        return res.status(200).json({message: "cadastro deletado"})
     }catch (err) {
         return res.status(500).json({ message: err.message })
 }
