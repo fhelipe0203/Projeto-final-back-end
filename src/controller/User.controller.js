@@ -58,6 +58,9 @@ const putUser = async (req, res) => {
     if (req.body.contato != null) {
         encontrarCadastroUser.contato = req.body.contato
     };
+    if (req.body.interesse != null) {
+        encontrarCadastroUser.interesse = req.body.interesse
+    };
 
     try {
         const cadastroUserAtualizado = await encontrarCadastroUser.save()
