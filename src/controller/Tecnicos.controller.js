@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const Cadastro = require("../models/tecnicos")
 
 
-const resultadoCadastro= async (req, res) => {
+const resultadoTecnico= async (req, res) => {
     try {
         const cadastro = await Cadastro.find()
         return res.status(200).json(cadastro)
@@ -11,7 +11,8 @@ const resultadoCadastro= async (req, res) => {
     }
 };
 
-const IdCadastro= async(req, res)=>{
+
+const IdTecnico= async(req, res)=>{
     try {
         const cadastro = await Cadastro.findById(req.params.id)
         return res.status(200).json(cadastro)
@@ -21,7 +22,8 @@ const IdCadastro= async(req, res)=>{
 };
 
 
-const criarCadastro = async (req, res) => {
+
+const criarCadastroTecnico = async (req, res) => {
     //tirar o console.log
     console.log(req.body)
     const cadastro = new Cadastro({
@@ -44,9 +46,10 @@ const criarCadastro = async (req, res) => {
     catch (err) {
         res.status(500).json({ message: err.message })
     }
-}
+};
 
-const patchCadastro = async (req, res) => {
+
+const patchTecnico = async (req, res) => {
     const encontrarCadastro = await Cadastro.findById(req.params.id)
      //tirar o console.log   
          console.log(req.body)
@@ -71,17 +74,13 @@ const patchCadastro = async (req, res) => {
     res.status(500).json({message: err.message})
    }
     
-}
-
-/*const patchCadastro = async (req, res) => {
-    const encontrarCadastro = await Cadastro.findById(req.params.id)
-    const updateObject = req.body; 
-    Cadastro.updateOne({_id  : req.params.id}, {$set: updateObject});
-};*/
+};
 
 
 
-const deleteCadastro = async (req, res) => {
+
+
+const deleteTecnico= async (req, res) => {
     try {
         const cadastros = await Cadastro.findById(req.params.id)
         if (cadastros == null) {
@@ -96,9 +95,9 @@ const deleteCadastro = async (req, res) => {
 
        
 module.exports= {
-    resultadoCadastro,
-    criarCadastro,
-    patchCadastro,
-    IdCadastro,
-    deleteCadastro
+    resultadoTecnico,
+    IdTecnico,
+    criarCadastroTecnico,
+    patchTecnico,
+    deleteTecnico
 }

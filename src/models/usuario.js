@@ -14,7 +14,11 @@ const cadastroUserShema = new mongoose.Schema({
     contato: {
         type: String,
         require: true
-    }
+    },
+    interesse:{
+        type: String,
+        require: true
+    },
 })
 
 module.exports = mongoose.model("cadastroUser", cadastroUserShema)
