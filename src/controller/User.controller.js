@@ -28,6 +28,7 @@ const criarCadastroUser = async (req, res) => {
         nome: req.body.nome, 
         email: req.body.email,
         contato: req.body.contato,
+        interesse: req.body.interesse
     })
     const cadastroUserJaExistir = await cadastroUser.findOne({ email: req.body.email })
     if (cadastroUserJaExistir) {
