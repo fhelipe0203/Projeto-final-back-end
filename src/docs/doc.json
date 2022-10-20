@@ -558,8 +558,8 @@
                 "$ref": "#/components/schemas/BodyHistoricoPost"
               },
               "example": {
-                "tecnico": "Tony Stark",
-                "usuario": "Peter Parker"
+                "tecnico": "635036c4e8224582d9aaa523",
+                "usuario": "634f8ac06be204f1fa6168fb"
               }
             }
           },
