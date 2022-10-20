@@ -28,7 +28,9 @@ Inicie o servidor
 ```bash
   npm run start
 ```
+## Para executar Docs/Swagger
 
+É preciso usar //localhost/4000/docs
 
 ## Aprendizados
 
